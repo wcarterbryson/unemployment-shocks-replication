@@ -53,7 +53,7 @@ plot_ir_robust <- function(mdl, in_dir, out_dir,
     polygon(c(h, rev(h)), c(low1, rev(upp1)),
             col = "gray45", border = "gray45")
     lines(h, med, col = lc_line1, lty = lt_line1, lwd = lw)
-    lines(c(-1, Nhp + 1), c(0, 0), col = "black", lty = 3, lw = 1)
+    lines(c(-1, Nhp + 1), c(0, 0), col = "black", lty = 3, lwd = 1)
     box(lwd = 1)
     dev.off()
 

@@ -14,7 +14,10 @@ source("./code/config.R")
 ## Create output directories if they don't exist
 for (d in c(ofig_dir, otab_dir,
             paste0(ofig_dir, "cholesky"),
-            paste0(ofig_dir, "zerosign"))) {
+            paste0(ofig_dir, "zerosign"),
+            paste0(ofig_dir, "robustness/lags"),
+            paste0(ofig_dir, "robustness/sample"),
+            paste0(ofig_dir, "robustness/specification"))) {
     dir.create(d, recursive = TRUE, showWarnings = FALSE)
 }
 
@@ -39,3 +42,4 @@ source("./code/3_figures_tables/3h_plot_hd.R")                  ## Figure 8 & 9
 source("./code/3_figures_tables/3i_plot_shimer_2state.R")       ## Figure A.1
 source("./code/3_figures_tables/3j_plot_shimer_3state.R")       ## Figure A.2
 source("./code/3_figures_tables/3k_plot_2state_vs_3state.R")    ## Figure A.3
+source("./code/3_figures_tables/3l_plot_ir_robustness.R")       ## Appendix B
