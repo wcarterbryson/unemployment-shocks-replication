@@ -34,6 +34,7 @@ To produce the figures and tables in the draft, follow the steps below:
 0. Ensure that all necessary raw data files are updated and saved in `data/raw/` (see data documentation below for additional details).
 1. Run `code/1_data_cleaning/run_1.R` to produce the clean data files in `data/clean/`.
     - Paths are set automatically — no manual path editing required for R.
+    - Before running, set `ipums_extract_num` near the top of `run_1.R` to match your IPUMS CPS extract number (marked with a `# SET` comment). See the CPS section of the data documentation below for details.
     - Note that some parameters (e.g. sample start/end dates) are set manually in the sub-scripts and functions in `code/1_data_cleaning/`.
     - Most importantly, this script produces the file `data/clean/svar_data.csv`, which contains the data used in the SVAR analysis.
 2. Run `code/2_svar_analysis/run_2.m` to run the Matlab code that conducts the SVAR analysis.
@@ -120,10 +121,11 @@ To produce the figures and tables in the draft, follow the steps below:
     4. Select the samples below
         - Basic Monthly: 1976–2024, all months
     5. Submit the extract ("CREATE DATA EXTRACT")
-    6. Once the extract is ready, save the following files to `data/raw/IPUMS_CPS/`, renaming them as shown:
-        - `cps_extract.dat.gz` : raw data file
-        - `cps_extract.R` : R file to unpack data
-        - `cps_extract.xml` : data dictionary file
+    6. Once the extract is ready, save the following files to `data/raw/IPUMS_CPS/` **without renaming them** (IPUMS names them `cps_XXXXX.*` where `XXXXX` is your extract number):
+        - `cps_XXXXX.dat.gz` : raw data file
+        - `cps_XXXXX.R` : R file to unpack data
+        - `cps_XXXXX.xml` : data dictionary file
+    7. Open `code/1_data_cleaning/run_1.R` and set `ipums_extract_num` to your extract number (e.g. `"00145"` for `cps_00145.xml`). This is marked with a `# SET` comment near the top of the file.
 
 ### Sample
 

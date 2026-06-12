@@ -9,8 +9,7 @@ library(lubridate)
 library(data.table)
 
 ## Load functions and set paths
-source("./code/utils/utility_functions.R")
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 print("----- Constructing 2-state flows") ## Print progress to screen
 
 ## SET parameters

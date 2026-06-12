@@ -6,8 +6,7 @@ rm(list = ls())
 library(lubridate)
 
 ## Load functions and set paths
-source("./code/utils/utility_functions.R")
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 
 ## Define function: Clean Shimer data
 clean_shimer <- function(data_dir, file_name, series_name) {

@@ -6,8 +6,7 @@ rm(list = ls())
 library(tis)
 library(lubridate)
 library(data.table)
-source("./code/utils/utility_functions.R")
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 source("./code/utils/set_plot_palette.R")
 
 ## SET plotting parameters

@@ -4,7 +4,7 @@
 ## Setup
 rm(list = ls())
 library(tis)
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 
 ## SET plotting parameters
 mdls <- c("zerosign", "cholesky")       ## Which specifications to use

@@ -6,8 +6,7 @@ rm(list = ls())
 library(lubridate)
 
 ## Load functions and set paths
-source("./code/utils/utility_functions.R")
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 
 ## Extract each data series from FRED format
 unr <- clean_fred(fred_code = "UNRATE", data_dir = dfrd_dir)

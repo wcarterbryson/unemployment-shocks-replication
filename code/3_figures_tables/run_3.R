@@ -9,8 +9,7 @@ library(lubridate)
 library(data.table)
 
 ## Load functions and set paths
-source("./code/utils/utility_functions.R")
-source("./code/utils/set_paths.R")
+source("./code/config.R")
 
 ## Create output directories if they don't exist
 for (d in c(ofig_dir, otab_dir,
