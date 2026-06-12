@@ -9,6 +9,7 @@
 .dat.gz
 data/raw/IPUMS_CPS/*
 !data/raw/IPUMS_CPS/.gitkeep
+!data/raw/IPUMS_CPS/cps_extract.R
 
 # Latex file
 *.aux
