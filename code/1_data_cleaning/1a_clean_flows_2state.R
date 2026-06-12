@@ -26,8 +26,9 @@ clean_cps <- function(proj_dir, datt_dir, save_dir, ipums_r = "cps_extract.R") {
     setwd(datt_dir)
     source(ipums_r)
     setwd(proj_dir)
-    colnames(data) <- tolower(colnames(data))   ## Convert to lowercase
-    cps <- data.frame(data)                     ## Unpack
+    cps <- data.frame(data)                     ## Unpack (copy to local)
+    rm("data", envir = .GlobalEnv); gc()        ## Free global data immediately
+    colnames(cps) <- tolower(colnames(cps))
 
     ## Select sample
     cps <- subset(cps, labforce == 2 & (empstat >= 20 & empstat < 30)) ## U

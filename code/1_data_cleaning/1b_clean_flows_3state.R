@@ -32,9 +32,11 @@ cps_import <- function(proj_dir, data_dir, save_dir, keep_cols = "lfs",
     setwd(data_dir)                             ## Change to data directory
     source(ipums_r)                             ## Run IPUMS file
     setwd(proj_dir)                             ## Change back main directory
-    colnames(data) <- tolower(colnames(data))   ## Make column names lowercase
-    bms_raw <- as.data.table(data)              ## Unpack dataset
+    bms_raw <- as.data.table(data)              ## Copy to local data.table
+    rm("data", envir = .GlobalEnv); gc()        ## Free global data
+    colnames(bms_raw) <- tolower(colnames(bms_raw))
     cps_clean <- subset(bms_raw, !(labforce == 0) & age >= 16 & cpsidv != 0)
+    rm(bms_raw); gc()                           ## Free full table before merge
 
     ## Create labor force status and date variable
     cps_clean$month <- as.Date(
@@ -62,6 +64,9 @@ cps_import <- function(proj_dir, data_dir, save_dir, keep_cols = "lfs",
 
     ## Merge months t and t + 1
     ## NOTE: assumes missing-at-random
+    rm(cps_clean); gc()                         ## Free before merge
+    setDT(cps_t0); setDT(cps_t1)
+    setkeyv(cps_t0, c("cpsidv", "month")); setkeyv(cps_t1, c("cpsidv", "month"))
     cps_merged <- merge(cps_t0, cps_t1, by = c("cpsidv", "month"), all = FALSE)
 
     ## Export match diagnostics
@@ -76,7 +81,7 @@ cps_import <- function(proj_dir, data_dir, save_dir, keep_cols = "lfs",
             month = seq(min(tmp$month), max(tmp$month), by = "month"))
         tmp <- merge(all_months, tmp, by = "month", all.x = TRUE)
         tmp <- tmp[order(tmp$month), ]
-        write.csv(tmp, file = "./Output/Temp/match_diagnostics.csv",
+        write.csv(tmp, file = paste0(dcln_dir, "match_diagnostics.csv"),
                   row.names = FALSE)
     }
 
