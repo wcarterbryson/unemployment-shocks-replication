@@ -5,19 +5,16 @@ function pths = set_paths()
 % have to set them in each sub-program.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% SET path to Empirical Macro Toolbox (Ferroni and Canova, 2025)
-% *** Edit this line to point to your local copy of the toolbox ***
-util_dir = '/path/to/toolbox/';
+% SET: full path to the BVAR_ toolbox directory (Ferroni and Canova, 2025)
+util_dir = '/path/to/BVAR_/';
+addpath(fullfile(util_dir, 'bvartools'))
 
 % Project root is derived automatically from this file's location
-this_dir     = fileparts(mfilename('fullpath'));
+this_dir      = fileparts(mfilename('fullpath'));
 pths.root_dir = fullfile(this_dir, '..', '..');
 
-% SET sub-directories
+% Sub-directories
 pths.dcln_dir = fullfile(pths.root_dir, 'data', 'clean');
 pths.ores_dir = fullfile(pths.root_dir, 'output', 'results');
-
-% Add path to Empirical macro toolbox (Ferroni and Canova, 2025)
-addpath(fullfile(util_dir, 'BVAR_', 'bvartools'))
 
 end

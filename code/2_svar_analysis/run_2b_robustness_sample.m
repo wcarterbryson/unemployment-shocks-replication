@@ -1,7 +1,7 @@
 % File description: run robustness - including COVID
 
-% Clear workspace and start the timer
-clear; close all; clc; tic;
+% Clear workspace
+clear; close all; clc;
 
 % Set paths and parameters
 pths = set_paths();
@@ -51,4 +51,3 @@ if para.save_flag
     save_results(qt, Yt, Zsgn, para, pths);
 end
 
-toc;

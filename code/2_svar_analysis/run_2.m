@@ -1,7 +1,7 @@
 % File description: run estimation code
 
-% Clear workspace and start the timer
-clear; close all; clc; tic;
+% Clear workspace
+clear; close all; clc;
 
 % Set paths and parameters
 pths = set_paths();
@@ -74,4 +74,3 @@ if para.plot_flag
     make_plots(qt, Yt, Zsgn, para);
 end
 
-toc;

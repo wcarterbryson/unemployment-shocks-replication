@@ -38,7 +38,7 @@ To produce the figures and tables in the draft, follow the steps below:
     - Note that some parameters (e.g. sample start/end dates) are set manually in the sub-scripts and functions in `code/1_data_cleaning/`.
     - Most importantly, this script produces the file `data/clean/svar_data.csv`, which contains the data used in the SVAR analysis.
 2. Run `code/2_svar_analysis/run_2.m` to run the Matlab code that conducts the SVAR analysis.
-    - Set the path to the Empirical Macro Toolbox in `code/2_svar_analysis/set_paths.m` (one line). All other paths are set automatically.
+    - Set `util_dir` in `code/2_svar_analysis/set_paths.m` to the path of your local copy of the Empirical Macro Toolbox (`BVAR_`) directory (marked with a `% SET` comment). All other paths are set automatically.
     - Make sure to set required parameters in `code/2_svar_analysis/set_paras.m`.
     - This script produces several .csv files containing estimation results that are saved in `output/results/`
 3. Run `code/3_figures_tables/run_3.R` to produce the figures and tables.
