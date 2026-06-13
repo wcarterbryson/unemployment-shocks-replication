@@ -68,3 +68,4 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+data/clean/cps_raw.RData
