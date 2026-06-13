@@ -34,12 +34,12 @@ To produce the figures and tables in the draft, follow the steps below:
 0. Ensure that all necessary raw data files are updated and saved in `data/raw/` (see data documentation below for additional details).
 1. Run `code/1_data_cleaning/run_1.R` to produce the clean data files in `data/clean/`.
     - Paths are set automatically — no manual path editing required for R.
-    - Before running, set `ipums_extract_num` near the top of `run_1.R` to match your IPUMS CPS extract number (marked with a `# SET` comment). See the CPS section of the data documentation below for details.
+    - Before running, set `ipums_extract_num` near the top of `code/config.R` to match your IPUMS CPS extract number (marked with a `# SET` comment). See the CPS section of the data documentation below for details.
     - Note that some parameters (e.g. sample start/end dates) are set manually in the sub-scripts and functions in `code/1_data_cleaning/`.
     - Most importantly, this script produces the file `data/clean/svar_data.csv`, which contains the data used in the SVAR analysis.
 2. Run `code/2_svar_analysis/run_2.m` to run the Matlab code that conducts the SVAR analysis.
     - Set `util_dir` in `code/2_svar_analysis/set_paths.m` to the path of your local copy of the Empirical Macro Toolbox (`BVAR_`) directory (marked with a `% SET` comment). All other paths are set automatically.
-    - Make sure to set required parameters in `code/2_svar_analysis/set_paras.m`.
+    - Confirm that required parameters in `code/2_svar_analysis/set_paras.m` are set.
     - This script produces several .csv files containing estimation results that are saved in `output/results/`
 3. Run `code/3_figures_tables/run_3.R` to produce the figures and tables.
     - Note that some plotting parameters are set manually in the sub-scripts and functions in `code/3_figures_tables/`.
@@ -134,7 +134,7 @@ Note: the IPUMS CPS extract is large (~1.5 GB compressed). The data cleaning scr
         - `cps_XXXXX.dat.gz` : raw data file
         - `cps_XXXXX.R` : R file to unpack data
         - `cps_XXXXX.xml` : data dictionary file
-    7. Open `code/1_data_cleaning/run_1.R` and set `ipums_extract_num` to your extract number (e.g. `"00145"` for `cps_00145.xml`). This is marked with a `# SET` comment near the top of the file.
+    7. Open `code/config.R` and set `ipums_extract_num` to your extract number (e.g. `"00145"` for `cps_00145.xml`). This is marked with a `# SET` comment near the top of the file.
 
 ### Sample
 
