@@ -1,76 +1,11 @@
-% File description: run estimation code
+% Run all
 
-% Clear workspace
-clear; close all; clc;
+% Change to this file's directory so sub-scripts resolve correctly
+cd(fileparts(mfilename('fullpath')));
 
-% Set paths and parameters
-pths = set_paths();
-para = set_paras();
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Import and clean data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Read in svar data
-svar_data = readtable(fullfile(pths.dcln_dir, 'svar_data.csv'));
-quarter = datetime(svar_data.quarter); % Unpack date variable
-
-% Ensure sample = 1948:1 to 2019:4
-in_samp = quarter >= datetime(1948,1,1) & quarter <= datetime(2019,12,31);
-svar_data = svar_data(in_samp,:);
-quarter = quarter(in_samp);
-
-% Create dct from raw data names to abbreviations
-name_dct = containers.Map({'eu_2state', 'ue_2state', 'ur', 'mu', ...
-    'pi_eu_3state', 'pi_ue_3state', 'v', 'gdpc1'}, ...
-    {'peu', 'pue', 'unr', 'aud', 'eu3', 'ue3', 'vac', 'gdp'});
-
-% Unpack data series and apply Hamilton filter
-D = struct(); % Initialize output struct
-for key = keys(name_dct)
-    k = key{1}; % Get each key (raw data series name)
-    D.raw.(name_dct(k)) = svar_data.(k);
-    D.trd.(name_dct(k)) = ham_filter(D.raw.(name_dct(k)), 8, 4);
-    D.cyc.(name_dct(k)) = log(D.raw.(name_dct(k))./D.trd.(name_dct(k)));
-end
-
-% Specify VAR and variable order: {P(EU), P(UE), UR, Avg. Unemp. Dur.}
-Yt = 100.*[D.cyc.peu D.cyc.pue D.cyc.unr D.cyc.aud];
-qt = quarter(~any(isnan(Yt),2));    % Trim NaN
-Yt = Yt(~any(isnan(Yt),2),:);       % Trim NaN
-
-% Specify variables for local projections
-LPt = log([D.raw.eu3 D.raw.ue3 D.raw.vac]); % Log-levels
-LPt = LPt(ismember(quarter, qt), :);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Run estimation and decompositions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Cholesky
-Chol.est = estimate_svar(Yt, para);     % Estimate SVAR
-Chol.VD = var_decomp(Chol.est, para);   % Variance decomposition
-Chol.VD_noint = var_decomp(Chol.est, para, {{1, 2}, {2, 1}});
-Chol.HD = my_hd(Chol.est, para);        % Historical decomposition
-Chol.FEVD = my_fevd(Chol.est);          % Forecast error variance decomp.
-[Chol.LP.b, Chol.LP.b_low, Chol.LP.b_upp] = my_lp(LPt, qt, Chol.est, para);
-if para.save_flag
-    save_results(qt, Yt, Chol, para, pths);
-end
-
-% Zero-sign restrictions
-Zsgn.est = estimate_svar(Yt, para, 'zerosign'); % Estimate SVAR
-Zsgn.VD = var_decomp(Zsgn.est, para);   % Variance decomposition
-Zsgn.VD_noint = var_decomp(Zsgn.est, para, {{1, 2}, {2, 1}});
-Zsgn.HD = my_hd(Zsgn.est, para);        % Historical decomposition
-Zsgn.FEVD = my_fevd(Zsgn.est);          % Forecast error variance decomp.
-[Zsgn.LP.b, Zsgn.LP.b_low, Zsgn.LP.b_upp] = my_lp(LPt, qt, Zsgn.est, para);
-if para.save_flag
-    save_results(qt, Yt, Zsgn, para, pths);
-end
-
-% Do plots
-if para.plot_flag
-    make_plots(qt, Yt, Zsgn, para);
-end
-
+tic;
+run_2_main
+run_2a_robustness_lags
+run_2b_robustness_sample
+run_2c_robustness_specification
+toc;

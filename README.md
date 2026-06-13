@@ -11,7 +11,8 @@ unemployment-shocks/
 |   │   ├── run_2.m         # Master program: run all scripts in directory
 |   │── 3_figures_tables/   # R code to create all figures and tables
 |   │   ├── run_3.R         # Master program: run all scripts in directory
-│   └── utils/              # Helper R scripts and functions 
+│   ├── utils/              # Helper R scripts and functions
+│   └── config.R            # Configuration file to set options
 ├── data/
 │   |── clean/              # Cleaned data files (produced by run_1.R)
 │   └── raw/                # Raw data files
