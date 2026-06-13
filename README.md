@@ -52,7 +52,7 @@ Successfully replicated all results on June 12, 2026 using the following setup:
 - **OS**: macOS Sequoia 15.7.7
 - **CPU**: Intel Core i5-8279U @ 2.40GHz
 - **RAM**: 16 GB
-- **Runtime**: `code/2_svar_analysis/run_all.m` completed in approximately 44 minutes
+- **Runtime**: `code/2_svar_analysis/run_2.m` completed in approximately 44 minutes
 
 Note: the IPUMS CPS extract is large (~1.5 GB compressed). The data cleaning scripts are written to stay within a 16 GB memory budget; machines with less RAM may encounter issues.
 
